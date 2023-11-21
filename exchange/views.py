@@ -26,7 +26,7 @@ def main_view(request):
 def calculate_currency(request):
     best_rate = None
     if request.method == "GET":
-        form = RateForm
+        form = RateForm()
         return render(
             request, "calculate_form.html", {"currency": form, "best_rate": best_rate}
         )
@@ -39,7 +39,10 @@ def calculate_currency(request):
 
             best_rate = (
                 Rate.objects.filter(
-                    currency_from=currency_from, currency_to=currency_to).order_by("buy").first()
+                    currency_from=currency_from, currency_to=currency_to
+                )
+                .order_by("buy")
+                .first()
             )
 
         return render(
